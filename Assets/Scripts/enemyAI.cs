@@ -23,6 +23,8 @@ public class enemyAI : MonoBehaviour
     private bool alive;
     private float detectionRange = 5f;
     private float attackPower = 5;
+    private float attackCooldown = 1.0f;
+    private float lastAttackTime = 0f;
 
 
     private enum movementState { idle, walking, attack, death};
@@ -88,9 +90,11 @@ public class enemyAI : MonoBehaviour
         {
             currHealth -= damageAmount;
             //Debug.Log(transform.position);
-            Instantiate(popupDamageObj, transform.position, Quaternion.identity);
+            GameObject text = Instantiate(popupDamageObj, transform.position, Quaternion.identity);
+            //destroy text after 1.5 seconds
+            Destroy(text, 1);
             popupDamageText.text = damageAmount.ToString();
-            healthBar.updateHealthbar(maxHealth, currHealth);
+            //healthBar.updateHealthbar(maxHealth, currHealth);
         } 
 
     } //function to decrement health can be utilized in this script or another
@@ -118,16 +122,27 @@ public class enemyAI : MonoBehaviour
         return true ? currHealth > 0 : false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            anim.SetTrigger("attack");
-            player player = collision.gameObject.GetComponent<player>();
-            player.takeDamage(attackPower);
-            player.anim.SetTrigger("recieveHit");
-        } //checks if the current object collides with another with a tag of Player then triggers the current object attack animation and calls the function for the player to take damage and triggers the recieve hit animaion
+            if (Time.time - lastAttackTime >= attackCooldown)
+            {
+                anim.SetTrigger("attack");
+
+                player player = collision.gameObject.GetComponent<player>();
+                if (player != null)
+                {
+                    player.takeDamage(attackPower);
+                    player.anim.SetTrigger("recieveHit");
+                }
+
+                lastAttackTime = Time.time; 
+            }
+        }
     }
+
 
     public void knockback(Transform hitPosition, float knockbackPower)
     {

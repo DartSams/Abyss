@@ -1931,6 +1931,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Sprites_0
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 568
+        width: 256
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e45f9dd20ca0ec74d89077d8b0f35bfe
+      internalID: -1576814308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1953,6 +1974,7 @@ TextureImporter:
       Bucket: -2080484811
       Pointer: 1084520013
       Scarecrow: -1649204338
+      Sprites_0: -1576814308
       Stone1: -75292869
       Stone2: -1218938483
       Stone3: -1085265454
